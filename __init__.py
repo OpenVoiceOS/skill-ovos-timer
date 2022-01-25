@@ -20,7 +20,7 @@ from typing import List, Optional
 
 from mycroft import MycroftSkill, intent_handler
 from mycroft.audio import wait_while_speaking
-from mycroft.skills.intent_service import AdaptIntent
+from mycroft.skills.intent_services import AdaptIntent
 from mycroft.messagebus.message import Message
 from mycroft.util import play_wav
 from mycroft.util.format import pronounce_number, nice_duration, join_list
