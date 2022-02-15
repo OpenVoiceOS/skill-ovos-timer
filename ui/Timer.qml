@@ -11,16 +11,20 @@ Mycroft.CardDelegate {
     id: timerFrame
     property int timerCount: sessionData.activeTimerCount
     property int previousCount: 0
+    property bool horizontalMode: timerFrame.width >= timerFrame.height ? 1 : 0
 
     function getEndPos(){
-        var ratio = 1.0 - timerFlick.visibleArea.widthRatio;
-        var endPos = timerFlick.contentWidth * ratio;
+        var ratio = horizontalMode ? 1.0 - timerFlick.visibleArea.widthRatio : 1.0 - timerFlick.visibleArea.heightRatio
+        var endPos = horizontalMode ? timerFlick.contentWidth * ratio : timerFlick.contentHeight * ratio
         return endPos;
     }
 
     function scrollToEnd(){
-        console.log("Got Scroll To End")
-        timerFlick.contentX = getEndPos();
+        if (horizontalMode) {
+            timerFlick.contentX = getEndPos();
+        } else {
+            timerFlick.contentY = getEndPos();
+        }
     }
 
     onTimerCountChanged: {
@@ -28,7 +32,6 @@ Mycroft.CardDelegate {
             if(previousCount < timerCount) {
                 previousCount = previousCount + 1
             }
-            console.log(timerCount)
         }
     }
 
@@ -39,21 +42,25 @@ Mycroft.CardDelegate {
     Flickable {
         id: timerFlick
         anchors.fill: parent
-        contentWidth: timerViews.count == 1 ? width : width / 2.5 * timerViews.count
-        contentHeight: parent.height
+        contentWidth: horizontalMode ? (timerViews.count == 1 ? width : width / 2.5 * timerViews.count) : parent.width
+        contentHeight: horizontalMode ? parent.height : (timerViews.count == 1 ? height : height / 2.5 * timerViews.count)
         clip: true
 
-        Row {
+        Grid {
             id: timerViewLayout
             width: parent.width
             height: parent.height
             spacing: Mycroft.Units.gridUnit / 3
+            rows: horizontalMode ? 1 : timerViews.count
+            columns: horizontalMode ? timerViews.count : 1
 
             Repeater {
                 id: timerViews
-                width: timerFlick.width
-                height: parent.height
+                width: horizontalMode ? timerFlick.width : parent.width
+                height: horizontalMode ? parent.height : timerFlick.height
                 model: sessionData.activeTimers.timers
+                property alias horizontalMode: timerFrame.horizontalMode
+
                 delegate: TimerCard {
                 }
                 onItemRemoved: {

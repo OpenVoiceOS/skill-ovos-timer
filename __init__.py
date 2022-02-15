@@ -53,16 +53,22 @@ class TimerSkill(MycroftSkill):
         """Constructor"""
         super().__init__(self.__class__.__name__)
         self.active_timers = []
-        self.sound_file_path = Path(__file__).parent.joinpath("sounds", "two-beep.wav")
-        self.platform = self.config_core["enclosure"].get("platform", "unknown")
+        self.sound_file_path = None
+        self.platform = None
         self.timer_index = 0
         self.display_group = 0
-        self.regex_file_path = self.find_resource("name.rx", "regex")
-        self.all_timers_words = [word.strip() for word in self.translate_list("all")]
-        self.save_path = Path(self.file_system.path).joinpath("save_timers")
+        self.regex_file_path = None
+        self.all_timers_words = None
+        self.save_path = None
 
     def initialize(self):
         """Initialization steps to execute after the skill is loaded."""
+        self.sound_file_path = Path(__file__).parent.joinpath("sounds", "two-beep.wav")
+        self.platform = self.config_core["enclosure"].get("platform", "unknown")
+        self.regex_file_path = self.find_resource("name.rx", "regex")
+        self.all_timers_words = [word.strip() for word in self.translate_list("all")]
+        self.save_path = Path(self.file_system.path).joinpath("save_timers")
+        
         self._load_timers()
         self._reset_timer_index()
         if self.active_timers:
