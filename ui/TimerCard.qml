@@ -8,8 +8,8 @@ import Mycroft 1.0 as Mycroft
 
 ItemDelegate {
     id: timerCard
-    implicitHeight: timerViews.height
-    implicitWidth: timerViews.count == 1 ? timerViews.width : timerViews.width / 2.5
+    implicitHeight: timerViews.horizontalMode ? timerViews.height : (timerViews.count == 1 ? timerViews.height : timerViews.height / 2.5)
+    implicitWidth:  timerViews.horizontalMode ? (timerViews.count == 1 ? timerViews.width : timerViews.width / 2.5) : timerViews.width
     property color primaryColor: "#F7458E"
     property color secondaryColor: "#F7958E"
     property color expiredColor: "white"
