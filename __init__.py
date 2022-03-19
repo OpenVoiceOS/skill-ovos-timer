@@ -59,11 +59,12 @@ class TimerSkill(MycroftSkill):
         self.display_group = 0
         self.regex_file_path = self.find_resource("name.rx", "regex")
         self.all_timers_words = [word.strip() for word in self.translate_list("all")]
-        self.save_path = Path(self.file_system.path).joinpath("save_timers")
+        self.save_path = None
 
     def initialize(self):
         """Initialization steps to execute after the skill is loaded."""
-        self._load_timers()
+        self.save_path = Path(self.file_system.path).joinpath("save_timers")
+	self._load_timers()
         self._reset_timer_index()
         if self.active_timers:
             self.log.info("found {} active timers".format(str(len(self.active_timers))))
