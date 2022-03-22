@@ -59,10 +59,11 @@ class TimerSkill(MycroftSkill):
         self.display_group = 0
         self.regex_file_path = self.find_resource("name.rx", "regex")
         self.all_timers_words = [word.strip() for word in self.translate_list("all")]
-        self.save_path = Path(self.file_system.path).joinpath("save_timers")
+        self.save_path = None
 
     def initialize(self):
         """Initialization steps to execute after the skill is loaded."""
+        self.save_path = Path(self.file_system.path).joinpath("save_timers")
         self._load_timers()
         self._reset_timer_index()
         if self.active_timers:
@@ -78,7 +79,7 @@ class TimerSkill(MycroftSkill):
         )
         self.add_event("speak", self.handle_speak)
         self.add_event("skill.timer.stop", self.handle_timer_stop)
-        self.gui.register_handler("timerskill.gui.stop.timer", 
+        self.gui.register_handler("timerskill.gui.stop.timer",
                                   self.handle_cancel_single_timer)
 
     @intent_handler(AdaptIntent().optionally("start").require("timer"))
@@ -659,7 +660,7 @@ class TimerSkill(MycroftSkill):
         if self.gui.connected:
             self.gui.show_page("Timer.qml", override_idle=True)
             self._show_gui()
-        
+
     def _show_gui(self):
         """Update the device's display to show the status of active timers.
 
@@ -824,7 +825,7 @@ class TimerSkill(MycroftSkill):
         if answer == "yes":
             self._cancel_all_timers()
             self._reset()
-    
+
     def handle_cancel_single_timer(self, message):
         """Event handler for the cancel single timer command."""
         timer_info = message.data["timer"]
