@@ -10,9 +10,11 @@ ItemDelegate {
     id: timerCard
     implicitHeight: timerViews.height
     implicitWidth: timerViews.count == 1 ? timerViews.width : timerViews.width / 2.5
-    property color primaryColor: "#F7458E"
-    property color secondaryColor: timerCard.activeFocus ? "white" : "#F7958E"
-    property color expiredColor: "white"
+    property color backgroundColor: Kirigami.Theme.backgroundColor
+    property color backgroundBorderColor: Qt.darker(Kirigami.Theme.backgroundColor, 1.2)
+    property color primaryColor: Kirigami.Theme.highlightColor
+    property color secondaryColor: Qt.lighter(Kirigami.Theme.highlightColor, 1.25)
+    property color expiredColor: Kirigami.Theme.textColor
     property bool horizontalMode: width > height ? 1 : 0
 
     Component.onCompleted: {
@@ -27,8 +29,8 @@ ItemDelegate {
     }
 
     background: Rectangle {
-        color: "#313131"
-        border.color: "#212121"
+        color: timerCard.backgroundColor
+        border.color: timerCard.backgroundBorderColor
         border.width: 1
         radius: 15
     }
@@ -42,7 +44,7 @@ ItemDelegate {
             anchors.top: parent.top
 
             Label {
-               color: timerCard.secondaryColor
+               color: timerCard.expiredColor
                fontSizeMode: Text.Fit
                minimumPixelSize: 5
                font.pixelSize: 72
@@ -93,6 +95,7 @@ ItemDelegate {
                 id: sept
                 anchors.top: parent.top
                 width: parent.width
+                color: timerCard.secondaryColor
                 height: 1
             }
 
@@ -107,6 +110,7 @@ ItemDelegate {
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                color: timerCard.expiredColor
                 text: "Press Select To Cancel"
             }
         }

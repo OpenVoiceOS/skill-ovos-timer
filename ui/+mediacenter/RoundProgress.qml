@@ -17,13 +17,13 @@ Rectangle {
             running: modelData.expired
             loops: Animation.Infinite
             PropertyAnimation {
-                from: "#212121";
+                from: timerCard.backgroundBorderColor;
                 to: "transparent";
                 duration: 1000
             }
             PropertyAnimation {
                 from: "transparent";
-                to: "#212121";
+                to: timerCard.backgroundBorderColor;
                 duration: 1000
             }
         }
@@ -31,7 +31,7 @@ Rectangle {
 
     Text {
         id: timeText
-        color: timerCard.secondaryColor
+        color: timerCard.expiredColor
         fontSizeMode: Text.Fit
         minimumPixelSize: 5
         font.pixelSize: 72

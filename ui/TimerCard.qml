@@ -10,13 +10,15 @@ ItemDelegate {
     id: timerCard
     implicitHeight: timerViews.height
     implicitWidth: timerViews.count == 1 ? timerViews.width : timerViews.width / 2.5
-    property color primaryColor: "#F7458E"
-    property color secondaryColor: "#F7958E"
-    property color expiredColor: "white"
+    property color backgroundColor: Kirigami.Theme.backgroundColor
+    property color backgroundBorderColor: Qt.darker(Kirigami.Theme.backgroundColor, 1.2)
+    property color primaryColor: Kirigami.Theme.highlightColor
+    property color secondaryColor: Qt.lighter(Kirigami.Theme.highlightColor, 1.25)
+    property color expiredColor: Kirigami.Theme.textColor
 
     background: Rectangle {
-        color: "#313131"
-        border.color: "#212121"
+        color: timerCard.backgroundColor
+        border.color: timerCard.backgroundBorderColor
         border.width: 1
         radius: 15
     }
@@ -30,7 +32,7 @@ ItemDelegate {
             anchors.top: parent.top
 
             Label {
-               color: timerCard.secondaryColor
+               color: timerCard.expiredColor
                fontSizeMode: Text.Fit
                minimumPixelSize: 5
                font.pixelSize: 72
@@ -83,7 +85,7 @@ ItemDelegate {
                     Layout.fillHeight: true
 
                     background: Rectangle {
-                        color: "transparent"
+                        color: timerCard.secondaryColor
                         border.color: timerCard.primaryColor
                         radius: 6
                     }
@@ -91,10 +93,10 @@ ItemDelegate {
                     contentItem: Item {
                         Kirigami.Icon {
                             anchors.centerIn: parent
-                            source: Qt.resolvedUrl("icons/close.svg")
+                            source: "window-close-symbolic"
                             width: parent.height * 0.75
                             height: parent.height * 0.75
-                            color: "white"
+                            color: timerCard.expiredColor
                         }
                     }
 
