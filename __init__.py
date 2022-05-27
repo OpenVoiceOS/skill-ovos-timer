@@ -36,6 +36,7 @@ from .skill import (
     remove_conjunction,
     TimerDialog,
 )
+from ovos_utils.gui import GUIWidgets
 
 ONE_DAY = 86400
 MARK_I = "mycroft_mark_1"
@@ -60,6 +61,7 @@ class TimerSkill(MycroftSkill):
         self.regex_file_path = self.find_resource("name.rx", "regex")
         self.all_timers_words = [word.strip() for word in self.translate_list("all")]
         self.save_path = None
+        self.widget_api = GUIWidgets()
 
     def initialize(self):
         """Initialization steps to execute after the skill is loaded."""
@@ -81,6 +83,7 @@ class TimerSkill(MycroftSkill):
         self.add_event("skill.timer.stop", self.handle_timer_stop)
         self.gui.register_handler("timerskill.gui.stop.timer",
                                   self.handle_cancel_single_timer)
+        self.add_event("ovos.gui.show.active.timers", self.handle_show_timers_gui)
 
     @intent_handler(AdaptIntent().optionally("start").require("timer"))
     def handle_start_timer_generic(self, message: Message):
@@ -180,6 +183,7 @@ class TimerSkill(MycroftSkill):
         self.cancel_scheduled_event("ExpirationCheck")
         if self.active_timers:
             self.active_timers = []
+            self._handle_update_timer_widget()
 
     def _start_new_timer(self, message):
         """Start a new timer as requested by the user.
@@ -202,6 +206,7 @@ class TimerSkill(MycroftSkill):
                 # after the display starts.
                 self._show_gui_page()
                 self._start_display_update()
+                self._handle_update_timer_widget()
             self._speak_new_timer(timer)
             self._save_timers()
 
@@ -524,6 +529,8 @@ class TimerSkill(MycroftSkill):
             self.speak_dialog("cancel-all", data={"count": len(self.active_timers)})
         self.active_timers = list()
 
+        self._handle_update_timer_widget()
+
     def _cancel_single_timer(self, utterance: str):
         """Cancel the only active timer.
 
@@ -543,6 +550,7 @@ class TimerSkill(MycroftSkill):
         if timer is not None:
             self.active_timers.remove(timer)
             self.speak_dialog("cancelled-single-timer")
+        self._handle_update_timer_widget()
 
     def _match_cancel_request(self, utterance: str) -> bool:
         """Determine if the only active timer matches what the user requested.
@@ -934,6 +942,15 @@ class TimerSkill(MycroftSkill):
             with open(self.save_path, "rb") as data_file:
                 self.active_timers = pickle.load(data_file)
 
+        self._handle_update_timer_widget()
+
+    def _handle_update_timer_widget(self):
+        timerCount = len(self.active_timers)
+        timerWidgetData = {"count": timerCount, "action":"ovos.gui.show.active.timers"}
+        self.widget_api.update_widget("timer", timerWidgetData)
+
+    def handle_show_timers_gui(self, message):
+        self._show_gui_page()
 
 def create_skill():
     """Instantiate the timer skill."""
