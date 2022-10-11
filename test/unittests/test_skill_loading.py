@@ -6,7 +6,7 @@ from ovos_utils.bracket_expansion import expand_parentheses, expand_options
 
 from adapt.engine import IntentDeterminationEngine
 from adapt.intent import IntentBuilder
-from ovos_skill_timer import VolumeSkill, create_skill
+from skill_ovos_timer import VolumeSkill, create_skill
 from ovos_plugin_manager.skills import find_skill_plugins
 from ovos_utils.messagebus import FakeBus
 from mycroft.skills.skill_loader import PluginSkillLoader, SkillLoader
