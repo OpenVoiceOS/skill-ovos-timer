@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from setuptools import setup
+from os.path import walk, path
 
 URL = "https://github.com/OpenVoiceOS/skill-ovos-timer"
 SKILL_CLAZZ = "TimerSkill"  # needs to match __init__.py class name
