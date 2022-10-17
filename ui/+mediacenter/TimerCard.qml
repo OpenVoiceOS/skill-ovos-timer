@@ -111,7 +111,7 @@ ItemDelegate {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 color: timerCard.expiredColor
-                text: "Press Select To Cancel"
+                text: qsTr("Press Select To Cancel")
             }
         }
     }
