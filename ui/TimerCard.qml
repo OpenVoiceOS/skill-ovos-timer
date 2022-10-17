@@ -8,13 +8,12 @@ import Mycroft 1.0 as Mycroft
 
 ItemDelegate {
     id: timerCard
-    implicitHeight: timerViews.height
-    implicitWidth: timerViews.count == 1 ? timerViews.width : timerViews.width / 2.5
     property color backgroundColor: Kirigami.Theme.backgroundColor
     property color backgroundBorderColor: Qt.darker(Kirigami.Theme.backgroundColor, 1.2)
     property color primaryColor: Kirigami.Theme.highlightColor
     property color secondaryColor: Qt.lighter(Kirigami.Theme.highlightColor, 1.25)
     property color expiredColor: Kirigami.Theme.textColor
+    property bool horizontalMode: width > height ? 1 : 0
 
     background: Rectangle {
         color: timerCard.backgroundColor
@@ -45,6 +44,7 @@ ItemDelegate {
         }
 
         Item {
+            id: dialAreaParent
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: topArea.bottom
@@ -55,7 +55,7 @@ ItemDelegate {
             Rectangle {
                 id: dialArea
                 width: parent.height * 0.95
-                height: width
+                height: parent.height * 0.95
                 anchors.centerIn: parent
 
                 color: "transparent"
