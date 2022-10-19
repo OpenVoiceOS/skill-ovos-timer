@@ -1,4 +1,3 @@
-# write your first unittest!
 import unittest
 from ovos_plugin_manager.skills import find_skill_plugins
 
