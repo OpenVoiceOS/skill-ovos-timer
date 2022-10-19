@@ -1,4 +1,3 @@
-# write your first unittest!
 import unittest
 from os.path import exists
 from shutil import rmtree
