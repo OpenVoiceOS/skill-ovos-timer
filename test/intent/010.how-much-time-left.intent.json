@@ -1,6 +1,0 @@
-{
-    "utterance": "how much time is left",
-    "responses": ["first"],
-    "expected_dialog": ["ask.which.timer", "time.remaining"],
-    "evaluation_timeout": 10
-}

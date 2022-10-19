@@ -1,4 +1,3 @@
-# write your first unittest!
 import unittest
 from os.path import exists
 from shutil import rmtree
@@ -6,12 +5,13 @@ from shutil import rmtree
 from ovos_skills_manager import SkillEntry
 
 branch = "dev"
-url = f"https://github.com/OpenVoiceOS/ovos-skill-timer@{branch}"
+url = f"https://github.com/OpenVoiceOS/skill-ovos-timer@{branch}"
+
 
 class TestOSM(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        self.skill_id = "ovos-skill-timer.OpenVoiceOS"
+        self.skill_id = "skill-ovos-timer.openvoiceos"
 
     def test_osm_install(self):
         skill = SkillEntry.from_github_url(url)

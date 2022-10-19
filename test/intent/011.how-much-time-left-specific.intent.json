@@ -1,5 +1,0 @@
-{
-    "utterance": "how much time is left on the 5 minute timer",
-    "expected_dialog": "time.remaining",
-    "evaluation_timeout": 10
-}
