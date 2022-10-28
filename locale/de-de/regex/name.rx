@@ -1,0 +1,6 @@
+\bfür.* (für|namens) (?P<Name>.*)
+\bvon.* (für|namens) (?P<Name>.*)
+\blangen.* (für|namens) (?P<Name>.*)
+\b(für|namens) (?P<Name>.*) für
+\b(für|names) (?P<Name>.*)
+\b^.*(ein|einen|den|neuen|weiteren) (?P<Name>.*) timer

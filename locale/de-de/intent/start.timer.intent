@@ -1,8 +1,5 @@
-timer
-(ein | weiterer | zweiter | dritter | vierter | fünfter |) timer ((für |) {duration} |)
-ping mich um {duration}
-timer für {duration}
-
-
-
-{duration} Timer (genannt|mit Namenn|für) {name}.
+melde dich in {duration}
+( benachrichtige | ping ) ( mich | uns ) in {duration}
+( stups | stupse | klingel | klingle ) ( mich | uns ) an in {duration}
+( stups | stupse | klingel | klingle ) ( mich | uns ) in {duration} an
+( gib mir | gib uns | ) ( ein | eine | ) ( zeichen | benachrichtigung | ping ) in {duration}

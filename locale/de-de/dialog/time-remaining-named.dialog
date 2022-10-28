@@ -1,1 +1,2 @@
-Der {name} Timer für {{duration}} hat {{time_diff}} verbleibende Zeit
+Der {name} Timer hat {time_diff} verbleibend
+Der {name} Timer läuft in {time_diff} aus
