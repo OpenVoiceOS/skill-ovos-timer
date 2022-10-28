@@ -1,1 +1,2 @@
-Der {{ordinal}} Timer für {{duration}}, der {{name}} aufgerufen wurde, hat {{time_diff}} verbleibende Zeit
+Der {ordinal} {name} Timer hat {time_diff} verbleibend
+Der {ordinal} {name} Timer läuft in {time_diff} aus
