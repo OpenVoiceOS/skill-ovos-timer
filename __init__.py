@@ -70,8 +70,8 @@ class TimerSkill(MycroftSkill):
         self._reset_timer_index()
         if self.active_timers:
             self.log.info("found {} active timers".format(str(len(self.active_timers))))
-            #self._show_gui()
-            #self._start_display_update()
+            # self._show_gui()
+            # self._start_display_update()
             self._start_expiration_check()
 
         # To prevent beeping while listening
@@ -81,8 +81,9 @@ class TimerSkill(MycroftSkill):
         )
         self.add_event("speak", self.handle_speak)
         self.add_event("skill.timer.stop", self.handle_timer_stop)
-        self.gui.register_handler("timerskill.gui.stop.timer",
-                                  self.handle_cancel_single_timer)
+        self.gui.register_handler(
+            "timerskill.gui.stop.timer", self.handle_gui_cancel_single_timer
+        )
         self.add_event("ovos.gui.show.active.timers", self.handle_show_timers_gui)
 
     @intent_handler(AdaptIntent().optionally("start").require("timer"))
@@ -834,15 +835,18 @@ class TimerSkill(MycroftSkill):
             self._cancel_all_timers()
             self._reset()
 
-    def handle_cancel_single_timer(self, message):
+    def handle_gui_cancel_single_timer(self, message):
         """Event handler for the cancel single timer command."""
         timer_info = message.data["timer"]
-        self.log.info("Cancelling single timer: %s", timer_info.keys())
         timer_to_cancel = timer_info.get("timerName")
-        self._cancel_single_timer(timer_to_cancel)
+        self.log.info(f"Cancelling single timer: {timer_to_cancel}")
+        self.active_timers[:] = (
+            timer for timer in self.active_timers if timer.name != timer_to_cancel
+        )
+        self._handle_update_timer_widget()
+        self._save_timers()
         self._show_gui()
         if not self.active_timers:
-            self._cancel_all_timers()
             self._reset()
 
     def handle_wake_word_detected(self, _):
@@ -946,11 +950,12 @@ class TimerSkill(MycroftSkill):
 
     def _handle_update_timer_widget(self):
         timerCount = len(self.active_timers)
-        timerWidgetData = {"count": timerCount, "action":"ovos.gui.show.active.timers"}
+        timerWidgetData = {"count": timerCount, "action": "ovos.gui.show.active.timers"}
         self.widget_api.update_widget("timer", timerWidgetData)
 
     def handle_show_timers_gui(self, message):
         self._show_gui_page()
+
 
 def create_skill():
     """Instantiate the timer skill."""
