@@ -846,6 +846,12 @@ class TimerSkill(MycroftSkill):
         self._handle_update_timer_widget()
         self._save_timers()
         self._show_gui()
+        if timer_to_cancel.lower() != "timer":
+            self.speak_dialog("cancelled-timer-named", {"name": timer_to_cancel})
+        else:
+            self.speak_dialog("cancelled-single-timer")
+        if not self.active_timers:
+
         if not self.active_timers:
             self._reset()
 
