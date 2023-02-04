@@ -1,3 +1,7 @@
+
+## This skill has been archived, use the following skill for the same functionality: https://github.com/NeonGeckoCom/skill-alerts
+
+----------------------------------------------------------------------------------
 # <img src='https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/solid/stopwatch.svg' card_color='#40DBB0' width='50' height='50' style='vertical-align:bottom'/> Timer
 Set named timers for cooking, watering plants, brewing tea and more. 
 
